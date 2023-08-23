@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt=br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="ordenando.js"></script>
+    <style>
+        body {
+            padding: 20px;
+        }
+        .col {
+            width: 20%;
+        }
+
+        #valor {
+            margin-bottom: 10px;
+        } 
+
+        #selecao {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            margin-bottom: 10px;
+        }
+    </style>
+    <title>Ordenando Valores</title>
+</head>
+
+<body>
+    <div class="col">
+        <div class="border-bottom">
+            <h1>Ordenando Valores</h1>
+            <input type="number" class="form-control" name="valor" id="valor">
+            <button type="button" onclick="add()" class="btn btn-primary" name="adicionar"
+                id="adicionar">Adicionar</button>
+        </div>
+        <div>
+            <select class="form-select" id="selecao" aria-label="Default select example">
+                <option selected value="1">Bubble Sort</option>
+                <option value="2">Selection Sort</option>
+                <option value="3">Quick Sort</option>
+            </select>
+        </div>
+        <div class="border-bottom">
+            <button type="button" onclick="ordenar()" class="btn btn-primary">Ordenar</button>
+            <button type="button" onclick="misturar()" class="btn btn-primary">Misturar</button>
+        </div>
+        <div>
+            <ul id="valores">
+
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function add() {
+            var add_valor = document.getElementById("valor").value
+            var add_valores = document.getElementById("valores")
+
+            var node = document.createElement("li")
+            var texto = document.createTextNode(add_valor)
+
+            node.appendChild(texto)
+            add_valores.appendChild(node)
+
+        }
+
+        function ordenar() {
+            var lista_valores = document.getElementById("valores").children
+            var sort_selecao = document.getElementById("selecao").selectedIndex
+
+            const vetor_valores = []
+            for (var i = 0; i < lista_valores.length; i++) {
+                vetor_valores.push(eval(lista_valores[i].innerHTML))
+            }
+
+            console.log(vetor_valores)
+            console.log(sort_selecao)
+
+            if (sort_selecao == 0) {
+                bubble_sort(vetor_valores)
+                console.log(vetor_valores)
+            }
+
+            if (sort_selecao == 1) {
+                selection_sort(vetor_valores)
+                console.log(vetor_valores)
+            }
+
+            if (sort_selecao == 2) {
+                i = vetor_valores.length - 1
+                quick_sort(vetor_valores, 0, i)
+                console.log(vetor_valores)
+            }
+
+            document.getElementById("valores").innerHTML = vetor_valores.map(function (item) {
+                return `<li>${item}</li>`
+            }).join('')
+        }
+
+        function misturar() {
+            lista_valores = document.getElementById("valores").children
+
+            const vetor_valores = []
+            for (var i = 0; i < lista_valores.length; i++) {
+                vetor_valores.push(eval(lista_valores[i].innerHTML))
+            }
+
+            shuffle(vetor_valores)
+
+            document.getElementById("valores").innerHTML = vetor_valores.map(function (item) {
+                return `<li>${item}</li>`
+            }).join('')
+        }
+
+    </script>
+
+
+</body>
+
+</html>

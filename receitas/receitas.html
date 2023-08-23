@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <style>
+    body {
+      background-color: yellow;
+    }
+
+    #pnlCatalogo {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      min-height: 80vh;
+    }
+
+    .card-title {
+      text-align: center;
+      padding-top: 10px;
+    }
+
+    .card-body li {
+      text-align: left;
+      margin-left: 10px;
+    }
+  </style>
+  <title>Catálogo de Receitas</title>
+</head>
+
+<body onload="preencheCatalogo()">
+  <div class="container-fluid">
+    <div id="pnlCatalogo" class="row row-cols-1 row-cols-md-3 g-4">
+
+    </div>
+  </div>
+  <script>
+    const receitas = [
+      {
+        titulo: "Brusqueta",
+        imagem: "brusqueta.webp",
+        preparo: "Corte a baguete e leve ao forno, corte os tomates e tempere, esfregue o alho na baguete torrada e coloque o tomate tempeirado por cima.",
+        ingredientes: ["Baguete", "Dente de alho", "Tomates", "Tempeiros"]
+      },
+      {
+        titulo: "Fettuccine Alfredo",
+        imagem: "macarrao.webp",
+        preparo: "Cozinhe o macarrão, em outra panela ferva a manteiga e o creme de leite, adicione o queijo e mexa até encorporar, adicione o macarrão ao molho e mexa até tudo se misturar.",
+        ingredientes: ["Massa Fettuccine", "Creme de leite", "Queijo parmesão ralado", "Manteiga"]
+      },
+      {
+        titulo: "Pizza Margherita",
+        imagem: "pizza.webp",
+        preparo: "Adicione o molho de tomate a massa, acrescente o queijo parmesão ralado e a mussarela de búfula por cima, finalize com as folhas de manjericão e leve ao forno.",
+        ingredientes: ["Massa de pizza", "Molho de tomate", "Parmesão ralado", "Mussarela de búfala", "Folhas de manjericão"]
+      }
+    ]
+
+    function getListaIngredientes(receita) {
+      var texto = receitas.map((receitajson) => {
+        var ingredientes = receitajson.ingredientes
+        return ingredientes
+      })
+
+      return texto[receita].map((item) => {
+        return `<li>${item}</li>`
+      }).join("")
+    }
+
+
+    function getCard(receita) {
+      return `<div class="col">
+      <div class="card">
+        <img class="card-img-top" src="${receitas[receita].imagem}" alt="imagem">
+        <h5 class="card-title">${receitas[receita].titulo}</h5>
+        <div class="card-body">
+          <ul class="list-group">          
+            ${getListaIngredientes(receita)}
+          </ul>  
+            <hr>
+            ${receitas[receita].preparo}
+        </div>
+      </div>
+      </div>`
+
+    }
+
+    function preencheCatalogo() {
+      var catalogo = document.getElementById("pnlCatalogo")
+      var output = ""
+      for (var i = 0; i < receitas.length; i++) {
+        output += getCard(i)
+      }
+      catalogo.innerHTML = output
+    }
+
+
+  </script>
+</body>
+
+</html>
